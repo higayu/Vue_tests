@@ -23,11 +23,13 @@
   </template>
   
   <script>
+  import { ref } from 'vue';
+  
   export default {
     name: 'URLScript',
     setup() {
-      const fileName = Vue.ref('');
-      const fileUrl = Vue.ref('');
+      const fileName = ref('');
+      const fileUrl = ref('');
   
       const moji1 = `Option Explicit
   
@@ -45,7 +47,6 @@
   
   Set objWshShell = Nothing`;
   
-      // 入力フィールドにクリップボードの内容をペーストする関数
       async function pasteToField(field) {
         try {
           const text = await navigator.clipboard.readText();
@@ -55,7 +56,7 @@
             fileUrl.value = text;
           }
         } catch (err) {
-          alert("クリップボードの内容を読み取れませんでした: " + err);
+          alert('クリップボードの内容を読み取れませんでした: ' + err);
         }
       }
   
@@ -64,7 +65,7 @@
         const txt_url = fileUrl.value;
   
         if (!txt_name || !txt_url) {
-          alert("ファイル名とURLを入力してください。");
+          alert('ファイル名とURLを入力してください。');
           return;
         }
   
