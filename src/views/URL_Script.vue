@@ -1,111 +1,102 @@
 <template>
-  <div style="width: 500px;height: auto;margin: 50px auto;padding: 100px;background-color: aquamarine;">
-    <h2>[URLのリンクファイル作成ページ]</h2>
-    <div class="wrap">
+    <div style="width: 500px; height: auto; margin: 50px auto; padding: 100px; background-color: aquamarine;">
+      <h2>[URLのリンクファイル作成ページ]</h2>
+      <div class="wrap">
         <div>
-            <input style="font-size:25px;" id="text1" placeholder="ファイル名"></input>
-            <button onclick="pasteToField('text1')" style="font-size:20px;">Paste</button>
+          <input style="font-size: 25px;" v-model="fileName" placeholder="ファイル名" />
+          <button @click="pasteToField('fileName')" style="font-size: 20px;">Paste</button>
         </div>
         <div>
-            <input style="font-size:25px;" id="text2" placeholder="URL"></input>
-            <button onclick="pasteToField('text2')" style="font-size:20px;">Paste</button>
+          <input style="font-size: 25px;" v-model="fileUrl" placeholder="URL" />
+          <button @click="pasteToField('fileUrl')" style="font-size: 20px;">Paste</button>
         </div>
-        <button onclick="downloadTextFile()" style="width: 100px;height: 50px;">Download</button>
+        <button @click="downloadTextFile" style="width: 100px; height: 50px;">Download</button>
+      </div>
     </div>
-</div>
-
-
-<div>
-    <p><a href="https://qiita.com/studyhiminato1107/">Qiita</a></p>
-</div>
-<div>
-    <p><a href="https://github.com/higayu/">GitHub</a></p>
-</div>
-</template>
-
-<script>
-
-export default {
-  name: 'URL_Script',
-  components: {
-    
-  },
-
-  setup(props, { emit }) {
-    const envmoji = import.meta.env.VITE_API_URL;
-    const moji1 = `Option Explicit
-
-Const BROWSER = "chrome"
-
-Const URL = "`;
-
-const moji2 = `"
-
-Const DELIMS = " "
-
-Dim objWshShell
-Set objWshShell = CreateObject("WScript.Shell")
-
-objWshShell.run BROWSER & DELIMS & URL
-
-Set objWshShell = Nothing`;
-
-        // 入力フィールドにクリップボードの内容をペーストする関数
-        async function pasteToField(fieldId) {
-            try {
-                // クリップボードのテキストを取得
-                const text = await navigator.clipboard.readText();
-
-                // 指定された入力フィールドに設定
-                document.getElementById(fieldId).value = text;
-            } catch (err) {
-                alert("クリップボードの内容を読み取れませんでした: " + err);
-            }
+  
+    <div>
+      <p><a href="https://qiita.com/studyhiminato1107/">Qiita</a></p>
+    </div>
+    <div>
+      <p><a href="https://github.com/higayu/">GitHub</a></p>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'URLScript',
+    setup() {
+      const fileName = Vue.ref('');
+      const fileUrl = Vue.ref('');
+  
+      const moji1 = `Option Explicit
+  
+  Const BROWSER = "chrome"
+  
+  Const URL = "`;
+      const moji2 = `"
+  
+  Const DELIMS = " "
+  
+  Dim objWshShell
+  Set objWshShell = CreateObject("WScript.Shell")
+  
+  objWshShell.run BROWSER & DELIMS & URL
+  
+  Set objWshShell = Nothing`;
+  
+      // 入力フィールドにクリップボードの内容をペーストする関数
+      async function pasteToField(field) {
+        try {
+          const text = await navigator.clipboard.readText();
+          if (field === 'fileName') {
+            fileName.value = text;
+          } else if (field === 'fileUrl') {
+            fileUrl.value = text;
+          }
+        } catch (err) {
+          alert("クリップボードの内容を読み取れませんでした: " + err);
         }
-
-
-    function downloadTextFile() {
-        // テキストエリアの値を取得
-        const txt_name = document.getElementById('text1').value;
-        const txt_url = document.getElementById('text2').value;
-
-        // 文字列を結合
+      }
+  
+      function downloadTextFile() {
+        const txt_name = fileName.value;
+        const txt_url = fileUrl.value;
+  
+        if (!txt_name || !txt_url) {
+          alert("ファイル名とURLを入力してください。");
+          return;
+        }
+  
         const combinedText = moji1 + txt_url + moji2;
-
-        // テキストファイルを作成
         const blob = new Blob([combinedText], { type: 'text/plain' });
-
-        // ダウンロードリンクを作成
+  
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = txt_name + '.vbs'; // ダウンロードファイル名
+        link.download = `${txt_name}.vbs`;
         document.body.appendChild(link);
-
-        // 自動的にリンクをクリックしてダウンロードを開始
         link.click();
-
-        // リンクを削除
         document.body.removeChild(link);
-    }
-    
+      }
+  
       return {
-        envmoji,
-        moji1,
-        moji2,
+        fileName,
+        fileUrl,
         pasteToField,
         downloadTextFile,
       };
     },
-
-}
-</script>
-<style>
+  };
+  </script>
+  
+  <style>
   .wrap {
-      display:flex;
-      flex-flow: column;
-      border:2px #ccc solid;
-      height:300px;
-      margin:0 0 1em;
-      gap: 50px;
+    display: flex;
+    flex-direction: column;
+    border: 2px #ccc solid;
+    height: 300px;
+    margin: 0 0 1em;
+    gap: 50px;
   }
-</style>
+  </style>
+  
