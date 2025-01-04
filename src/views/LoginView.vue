@@ -5,6 +5,9 @@
       </header>
   
       <main>
+
+        <PutMessage/>
+
         <div class="container">
           <p>ID(メールアドレス)</p>
           <input type="email" v-model="inputValueId" />
