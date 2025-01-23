@@ -2,7 +2,6 @@
     <body>
         <header>
             <div class="title">Vue Firebase Example</div>
-            <Gmail_hasu />
         </header>
   
         <main>
