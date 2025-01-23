@@ -2,6 +2,7 @@
     <body>
         <header>
             <div class="title">Vue Firebase Example</div>
+            <Gmail_hasu />
         </header>
   
         <main>
@@ -69,6 +70,7 @@
   import Firebase from "../firebase_settings/index.js"
   import SideBar from './SideBar.vue';
   import URL_Script from './URL_Script.vue';
+  import Gmail_hasu from './Gmail_hasu.vue';
   
   const auth = Firebase.auth
   const provider = new GoogleAuthProvider();
@@ -80,6 +82,7 @@
         LoadingAnimationComponent,
         URL_Script,
         SideBar,
+        Gmail_hasu,
     },
   
     methods: {
