@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import CryptoJS from "crypto-js";
 import nodemailer from "nodemailer";
 
 export default {
