@@ -11,6 +11,9 @@
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
 
+const api_url = import.meta.env.VITE_SERVER;
+console.log("API URL:", api_url);
+
 export default {
   data() {
     return {
@@ -41,7 +44,6 @@ export default {
         // ハッシュ値を生成
         const hash = this.generateHash();
 
-        const api_url = import.meta.env.VITE_SERVER;
         // サーバーに送信
         const response = await axios.post(api_url, {
           hashValue: hash,
