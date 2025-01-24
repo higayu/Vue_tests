@@ -12,7 +12,6 @@ import axios from 'axios';
 import CryptoJS from 'crypto-js';
 
 const api_url = import.meta.env.VITE_SERVER;
-console.log("API URL:", api_url);
 
 export default {
   data() {
