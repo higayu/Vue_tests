@@ -42,7 +42,7 @@ export default {
         const hash = this.generateHash();
 
         // サーバーに送信
-        const response = await axios.post('https://node-gmail-server.vercel.app/', {
+        const response = await axios.post(import.meta.env.VITE_SERVER, {
           hashValue: hash,
         });
 
