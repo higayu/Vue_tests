@@ -41,8 +41,9 @@ export default {
         // ハッシュ値を生成
         const hash = this.generateHash();
 
+        const api_url = import.meta.env.VITE_SERVER;
         // サーバーに送信
-        const response = await axios.post(import.meta.env.VITE_SERVER, {
+        const response = await axios.post(api_url, {
           hashValue: hash,
         });
 
