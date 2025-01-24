@@ -1,14 +1,15 @@
 <template>
   <div>
     <h1>ハッシュ値生成＆送信</h1>
-    <button @click="sendHashEmail">ハッシュ値をGmailで送信</button>
+    <button @click="sendHash">ハッシュ値を生成してサーバーに送信</button>
     <p v-if="hashValue">生成されたハッシュ値: {{ hashValue }}</p>
     <p v-if="emailStatus">{{ emailStatus }}</p>
   </div>
 </template>
 
 <script>
-import nodemailer from "nodemailer";
+import axios from 'axios';
+import CryptoJS from 'crypto-js';
 
 export default {
   data() {
@@ -34,41 +35,24 @@ export default {
       return crc32Hash;
     },
 
-    // Gmailでメールを送信する関数
-    async sendHashEmail() {
+    // サーバーにハッシュ値を送信する関数
+    async sendHash() {
       try {
-        // 環境変数から情報を取得
-        const mail = import.meta.env.VITE_GMAIL_USER;
-        const pass = import.meta.env.VITE_GMAIL_PASS;
-        const to_user = import.meta.env.VITE_RECIPIENT_EMAIL;
-
-        // Nodemailerトランスポーターの作成
-        const transporter = nodemailer.createTransport({
-          service: "Gmail",
-          auth: {
-            user: mail,
-            pass: pass,
-          },
-        });
-
         // ハッシュ値を生成
         const hash = this.generateHash();
 
-        // メール送信
-        const info = await transporter.sendMail({
-          from: mail,
-          to: to_user,
-          subject: "NFCのハッシュ値",
-          text: `生成されたハッシュ値: ${hash}`,
+        // サーバーに送信
+        const response = await axios.post('http://localhost:3000/send-email', {
+          hashValue: hash,
         });
 
-        // メール送信成功
-        this.emailStatus = `メールが送信されました: ${info.response}`;
-        console.log("Message sent: %s", info.response);
+        // サーバーからのレスポンス
+        this.emailStatus = response.data;
+        console.log(response.data);
       } catch (error) {
         // エラーハンドリング
-        this.emailStatus = `メール送信中にエラーが発生しました: ${error.message}`;
-        console.error("Error sending email: %s", error);
+        this.emailStatus = `エラーが発生しました: ${error.message}`;
+        console.error(error);
       }
     },
   },
