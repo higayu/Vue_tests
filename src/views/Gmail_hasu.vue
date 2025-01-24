@@ -42,7 +42,7 @@ export default {
         const hash = this.generateHash();
 
         // サーバーに送信
-        const response = await axios.post('http://localhost:3000/send-email', {
+        const response = await axios.post('https://node-gmail-server.vercel.app/', {
           hashValue: hash,
         });
 
