@@ -7,9 +7,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
     // 環境変数を出力して確認
-    // console.log('VITE_API_URL:', env.VITE_API_URL);
-    // console.log('VITE_GET_RECODE:', env.VITE_GET_RECODE);
-    // console.log('VITE_SERVER:', env.VITE_SERVER);
+    console.log('VITE_API_URL:', env.VITE_API_URL);
+    console.log('VITE_GET_RECODE:', env.VITE_GET_RECODE);
+    console.log('VITE_SERVER:', env.VITE_SERVER);
 
     return {
       plugins: [vue()],
