@@ -13,7 +13,7 @@
 .env.development
 .env
 node_modules
-backend
+/backend
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
