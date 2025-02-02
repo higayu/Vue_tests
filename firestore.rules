@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // userDataのuserIdの中は、本人のみCRUD可能
+    match /userData/{userId} {
+        allow read, delete: if (
+            request.auth != null &&
+            request.auth.uid == userId
+        );
+        
+        // 特定のフィールドのみcreate,update許可し、データ型の指定もする
+        allow create, update: if (
+            request.auth != null &&
+            request.auth.uid == userId &&
+            request.resource.data.keys().hasOnly(['food', 'timestamp']) &&
+            request.resource.data.food is string &&
+            request.resource.data.timestamp is timestamp
+        );
+    }
+  }
+}
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // すべてのファイルへの読み書きを認証不要で許可
+    match /{allPaths=**} {
+      allow write: if request.resource.mimeType.startsWith("image/"); // 画像アップロード許可
+      allow read: if true; // 全ファイルの読み取り許可
+    }
+  }
+}
