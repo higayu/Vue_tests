@@ -24,6 +24,7 @@
     "pdfjs-dist": "^4.10.38",
     "pinia": "^2.3.1",
     "pinia-plugin-persistedstate": "^4.2.0",
+    "tesseract.js": "^6.0.0",
     "vite-plugin-vue-devtools": "^7.6.8",
     "vue": "^3.5.13",
     "vue-local-storage": "^0.1.3",

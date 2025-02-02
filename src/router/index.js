@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import RedirectLogin from '../views/RedirectLogin.vue'
+//import RedirectLogin from '../views/RedirectLogin.vue'
 import FoodView from '../views/FoodView.vue'
 
 // 画面遷移前にログイン済みかを判定するメソッドに必要なFirebaseのメソッド
@@ -15,9 +15,9 @@ const routes = [
         meta: { title: 'Home', requiresAuth: true}
     },
     {
-        path: '/redirectLogin',
-        name: 'redirectLogin',
-        component: RedirectLogin,
+        path: '/LoginView',
+        name: 'LoginView',
+        component: LoginView,
         meta: { title: 'RedirectLogin', requiresAuth: false}
     },
     {
@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
                 if (user) {
                     next()
                 } else {
-                    next({ name: 'redirectLogin' })
+                    next({ name: 'LoginView' })
                 }
             })
         }

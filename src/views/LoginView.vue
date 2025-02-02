@@ -54,6 +54,7 @@
             <SideBar />
             <URL_Script/>
         </main>
+        <pdftoimg />
   
         <FooterComponent>
         </FooterComponent>
@@ -70,6 +71,7 @@
   import SideBar from './SideBar.vue';
   import URL_Script from './URL_Script.vue';
   import Gmail_hasu from './Gmail_hasu.vue';
+  import pdftoimg from './pdftoimg.vue';
   
   const auth = Firebase.auth
   const provider = new GoogleAuthProvider();
@@ -82,6 +84,7 @@
         URL_Script,
         SideBar,
         Gmail_hasu,
+        pdftoimg,
     },
   
     methods: {
