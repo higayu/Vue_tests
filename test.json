@@ -1,0 +1,168 @@
+[
+    {
+        "user_id": 1,
+        "schedule_id": 1,
+        "scheduled_time": "2025-03-05",
+        "recorded_staff_id": 1
+    },
+    {
+        "user_id": 1,
+        "item_id": 9,
+        "servied_time": "2025-03-10 10:00:00",
+        "note": "サービスレコード更新",
+        "schedule_id": "",
+        "recorded_staff_id": 1
+    },
+    {
+        "delete_id": 6,
+        "id": 1,
+        "item_id": 9,
+        "served_time": "2025-03-10 10:00:00",
+        "note": "サービスレコード更新",
+        "schedule_id": "",
+        "recorded_staff_id": 1
+    },
+    {
+        "scheduled_time": "2025-03-10",
+        "recorded_staff_id": 1,
+        "schedule_id": 3
+    },
+    {
+        "item_id": 9,
+        "served_time": "2025-03-10 10:00:00",
+        "note": "サービスレコード更新",
+        "schedule_id": "",
+        "recorded_staff_id": 1
+    },
+    {
+        "item_id": 5,
+        "served_time": "2025-03-10 10:00:00",
+        "note": "レクリエーション",
+        "recorded_staff_id": 1
+    },
+    {
+        "delete_id": 6,
+        "id": 1,
+        "item_id": 8,
+        "served_time": "2025-03-10 10:00:00",
+        "note": "サービスレコード更新",
+        "schedule_id": null,
+        "recorded_staff_id": 1,
+        "error_log": ""
+    },
+    {
+        "log_date": "2025-03-10",
+        "recreation": "ゲーム",
+        "breakfast": "パン",
+        "lunch": "お米",
+        "dinner": "お米",
+        "snack": "お米",
+        "visitors": "訪問者",
+        "recorded_staff_id": 1
+    },
+    {
+        "user_id": 1,
+        "schedule_id": 5,
+        "scheduled_time": "2025-03-05",
+        "updated_staff_id": 1
+    },
+    {
+        "delete_id": 6,
+        "id": 1,
+        "served_time": "2025-03-10 10:00:00",
+        "service_json": "",
+        "note": "",
+        "schedule_id": "",
+        "recorded_staff_id": 1
+    },
+    {
+        "id": 1,
+        "user_id": 1,
+        "life_issue": "ふが",
+        "life_goal": "ふが",
+        "activity_goal": "ふが",
+        "service_detail": "ふが",
+        "start_date": "2025-03-01",
+        "end_date": "2025-08-01",
+        "frequency": "ふが",
+        "manager": "マネージャー2",
+        "note": "ケアプラン更新",
+        "updated_staff_id": ""
+    },
+    {
+        "plan_id": 1,
+        "update_staff_id": 1
+    },
+    {
+        "id": 1,
+        "log_date": "2025-03-10",
+        "recreation": "ゲーム",
+        "breakfast": "パン",
+        "lunch": "お米",
+        "dinner": "魚",
+        "snack": "お米",
+        "visitors": "スペシャルゲスト",
+        "community_interaction": "コミュニティインタラクション",
+        "updated_staff_id": 1
+    },
+    {
+        "id": 1,
+        "name": "佐藤　塩造",
+        "name_kana": "sato shizou",
+        "gender_id": 1,
+        "birthday": "2000-01-01",
+        "entry_date": "2000-01-01",
+        "exit_date": null,
+        "recorded_staff_id": 4
+    },
+
+    {
+        "user_id": 4,
+        "life_issue": "ふが",
+        "life_goal": "ふが",
+        "activity_goal": "ふが",
+        "service_detail": "ふが",
+        "start_date": "2025-03-01",
+        "end_date": "2025-08-01",
+        "frequency": "ふが",
+        "manager": "マネージャー2",
+        "note": "",
+        "recorded_staff_id": 1
+    },
+    {
+        "service_record_id": 51,
+        "id": 1,
+        "served_time": "2025-04-01 10:00:00",
+        "meal_category_id": 1,
+        "main_dish_id": 10,
+        "side_dish_id": 10,
+        "assistance_type_id": -1,
+        "note": "食事更新テスト",
+        "schedule_id": 1,
+        "recorded_staff_id": 1,
+        "error_log": ""
+    },
+    {
+        "service_record_id": 51,
+        "time": "2025-04-01 10:00:00",
+        "date": "2025-04-01",
+        "max_bp": 120,
+        "min_bp": 100,
+        "pulse": 70,
+        "kt": 36.5,
+        "spo2": 95,
+        "weight": 50,
+        "note": "バイタルテスト",
+        "schedule_id": 1,
+        "recorded_staff_id": 1
+    },
+
+    name（required|string）
+    name_kana（required|string）
+    gender_id（required|integer）
+    birthday（required|date）
+    entry_date（required|date）
+    exit_date（nullable|date）
+    recorded_staff_id（required|integer）
+
+]

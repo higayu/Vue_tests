@@ -1,67 +1,89 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-//import RedirectLogin from '../views/RedirectLogin.vue'
-import FoodView from '../views/FoodView.vue'
+// router/index.js
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
+// import PersonalRecordForm from "../components/PersonalRecordForm.vue";
+import HeaderBar from "../layout/HeaderBar.vue";
+// import NavBar1 from "../layout/NavBar1.vue";
+// import NavBar2 from "../layout/NavBar2.vue";
+import NavBar3 from "../layout/NavBar3.vue";
 
-// 画面遷移前にログイン済みかを判定するメソッドに必要なFirebaseのメソッド
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import UserList from "../pages/Touroku.vue";
+import UserSchedule from "../pages/UserSchedule.vue";
+import Nitijo from "../pages/Nitijo.vue";
+import nissi from "../pages/Nissi.vue";
+import kiroku from "../pages/Kiroku.vue";
+import SideBar from "../pages/SideBar.vue";
+import SideBar_kanri from "../pages/SideBar_kanri.vue";
+import { useShareStore } from "../stores/useShareData"; // Piniaストアをインポート
+import { useSelectedRecordStore } from '../stores/selectedRecord'; // 新しいストアをインポート
+import { usePrintDataStore } from '../stores/printData';
+// import List from "@/components/List.vue"; // 利用者一覧
+// import Kiroku from "@/components/Kiroku.vue"; // 個人記録
 
+// Define routes
 const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: HomeView,
-        meta: { title: 'Home', requiresAuth: true}
+  {
+    path: '/',
+    name: "UserSchedule",
+    components: {
+      header: HeaderBar,
+      navbar: NavBar3,
+      main: UserSchedule,
+    }
+  },
+  {
+    path: '/touroku',
+    name: "UserList",
+    components: {
+      header: HeaderBar,
+      navbar: NavBar3,
+      main: UserList,
+    }
+  },
+  {
+    path: "/nitijo/:id",
+    name: "Nitijo",
+    components: {
+      header: HeaderBar,
+      navbar: NavBar3,
+      main: Nitijo,
     },
-    {
-        path: '/LoginView',
-        name: 'LoginView',
-        component: LoginView,
-        meta: { title: 'RedirectLogin', requiresAuth: false}
+    props: true,
+    meta: { checkServiceStatus: true } // このルートではサービスステータスをチェックするフラグを追加
+  },
+
+  {
+    path: "/nissi",
+    name: "Kanri",
+    components: {
+      header: HeaderBar,  
+      navbar: NavBar3,
+      main: nissi,
+      sidebar: SideBar_kanri,
     },
-    {
-        path: '/food',
-        name: 'food',
-        component: FoodView,
-        meta: { title: 'Food', requiresAuth: true}
+    // props: (route) => ({ queryParams: route.query }),
+  },
+  {
+    path: "/kiroku",
+    name: "Kiroku",
+    components: {
+      header: HeaderBar,
+      navbar: NavBar3,
+      main: kiroku,
+      sidebar: SideBar
     },
-]
+  },
+
+
+  // { path: "/list", name: "List", component: List },  // 追加
+  // { path: "/kiroku", name: "Kiroku", component: Kiroku },  // 追加
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
-
-// 画面遷移成功後にページタイトルを設定
-router.afterEach((titleString) => {
-    document.title = titleString.meta.title + ' | Vue Firebase Example'
+  history: createWebHistory(),
+  //history: createWebHashHistory(), // ← ここを変更
+  routes,
 });
 
-// 画面遷移前にログイン済みかをチェックして、未ログイン時はログイン画面に強制遷移させる
-let onAuthStateChangedUnsubscribe
-router.beforeEach((to, from, next) => {
-    const auth = getAuth()
+//-----------------------------------------------------------------------------------------------//
 
-    if (!to.matched.some(record => record.meta.requiresAuth)) {
-        next()
-    } else {
-        if (auth.currentUser) {
-            next()
-            return
-        } else {
-            if (typeof onAuthStateChangedUnsubscribe === 'function') {
-                onAuthStateChangedUnsubscribe()
-            }
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    next()
-                } else {
-                    next({ name: 'LoginView' })
-                }
-            })
-        }
-    }
-})
-
-export default router
+export default router;

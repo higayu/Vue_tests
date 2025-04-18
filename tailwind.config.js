@@ -1,14 +1,16 @@
+/** @type {import('tailwindcss').Config} */
+import plugin from "tailwindcss/plugin";
 module.exports = {
-  // purge: [],　
-  content: [
-    './src/**/*.{html,js,vue}', // 監視対象ファイルのパターンを指定
-  ],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant(
+        "hover",
+        "@media(hover:hover){ &:where(:any-link, :enabled, summary):hover }"
+      );
+    }),
+  ],
+};
