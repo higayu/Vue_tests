@@ -7,28 +7,39 @@ import HeaderBar from "../layout/HeaderBar.vue";
 import NavBar3 from "../layout/NavBar3.vue";
 
 import UserList from "../pages/Touroku.vue";
-import UserSchedule from "../pages/UserSchedule.vue";
+import DashBoard from "../pages/DashBoard.vue";
 import Nitijo from "../pages/Nitijo.vue";
 import nissi from "../pages/Nissi.vue";
 import kiroku from "../pages/Kiroku.vue";
 import SideBar from "../pages/SideBar.vue";
 import SideBar_kanri from "../pages/SideBar_kanri.vue";
+import LoginView from "../views/LoginView.vue"; // ログインページをインポート
 import { useShareStore } from "../stores/useShareData"; // Piniaストアをインポート
 import { useSelectedRecordStore } from '../stores/selectedRecord'; // 新しいストアをインポート
 import { usePrintDataStore } from '../stores/printData';
+// 画面遷移前にログイン済みかを判定するメソッドに必要なFirebaseのメソッド
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Firebase from "../firebase_settings/index.js";
 // import List from "@/components/List.vue"; // 利用者一覧
 // import Kiroku from "@/components/Kiroku.vue"; // 個人記録
 
 // Define routes
 const routes = [
   {
+    path: '/login',
+    name: "Login",
+    component: LoginView,
+    meta: { requiresAuth: false } // 認証不要のページ
+  },
+  {
     path: '/',
-    name: "UserSchedule",
+    name: "DashBoard",
     components: {
       header: HeaderBar,
       navbar: NavBar3,
-      main: UserSchedule,
-    }
+      main: DashBoard,
+    },
+    meta: { requiresAuth: true } // 認証が必要なページ
   },
   {
     path: '/touroku',
@@ -37,7 +48,8 @@ const routes = [
       header: HeaderBar,
       navbar: NavBar3,
       main: UserList,
-    }
+    },
+    meta: { requiresAuth: true }
   },
   {
     path: "/nitijo/:id",
@@ -48,9 +60,11 @@ const routes = [
       main: Nitijo,
     },
     props: true,
-    meta: { checkServiceStatus: true } // このルートではサービスステータスをチェックするフラグを追加
+    meta: { 
+      requiresAuth: true,
+      checkServiceStatus: true 
+    }
   },
-
   {
     path: "/nissi",
     name: "Kanri",
@@ -60,7 +74,7 @@ const routes = [
       main: nissi,
       sidebar: SideBar_kanri,
     },
-    // props: (route) => ({ queryParams: route.query }),
+    meta: { requiresAuth: true }
   },
   {
     path: "/kiroku",
@@ -71,6 +85,7 @@ const routes = [
       main: kiroku,
       sidebar: SideBar
     },
+    meta: { requiresAuth: true }
   },
 
 
@@ -82,6 +97,26 @@ const router = createRouter({
   history: createWebHistory(),
   //history: createWebHashHistory(), // ← ここを変更
   routes,
+});
+
+// ナビゲーションガード
+router.beforeEach(async (to, from, next) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  
+  // 認証が必要なページかどうかを確認
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  
+  if (requiresAuth && !user) {
+    // 認証が必要なページに未ログインでアクセスした場合
+    next('/login');
+  } else if (to.path === '/login' && user) {
+    // ログイン済みでログインページにアクセスした場合
+    next('/');
+  } else {
+    // その他の場合は通常通り遷移
+    next();
+  }
 });
 
 //-----------------------------------------------------------------------------------------------//

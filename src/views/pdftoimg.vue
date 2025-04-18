@@ -42,7 +42,8 @@
 
 <script>
 import Tesseract from "tesseract.js";
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+import { getDocument } from "pdfjs-dist/legacy/build/pdf";
+import { GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
 
 // PDF.jsのワーカーパスを設定
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.worker.min.js`;

@@ -27,4 +27,5 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 // 必要なインスタンスをエクスポート
-export default { analytics, db, auth };
+export { db, auth, analytics };
+export default { db, auth, analytics };

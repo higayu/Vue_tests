@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import Login from "./pages/Login.vue";
+import Login from "./views/LoginView.vue";
 import { useRoute } from "vue-router";
 import { ref, reactive, onMounted, watch, onBeforeUnmount, toRefs, computed, getCurrentInstance } from "vue";
 import { useShareStore } from "./stores/useShareData.js";

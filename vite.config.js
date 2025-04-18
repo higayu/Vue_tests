@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [vue()],
-    base: '/shotaki/',//テストサーバー用
+   // base: '/shotaki/',//テストサーバー用
     root: "./src",
     envDir: '../',  // これを追加
     build: {

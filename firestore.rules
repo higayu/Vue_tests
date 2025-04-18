@@ -2,6 +2,12 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
+    // usersコレクションへの読み取り権限を追加
+    match /users/{userId} {
+      allow read: if true; // 認証不要で読み取りを許可
+      allow write: if request.auth != null; // 認証済みユーザーのみ書き込みを許可
+    }
+    
     // userDataのuserIdの中は、本人のみCRUD可能
     match /userData/{userId} {
         allow read, delete: if (
