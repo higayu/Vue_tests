@@ -116,7 +116,7 @@ import MemoManager from '../pages/MemoManager.vue';
   };
 </script>
   
-  <style scoped>
+  <style>
   /* スタイルは Tailwind CSS を使用するため、追加のスタイルは不要 */
   </style>
   

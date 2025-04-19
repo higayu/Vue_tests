@@ -62,6 +62,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { db } from '../firebase_settings/index.js';
 import { collection, getDocs, getDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { marked } from 'marked';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 import MemoModal from '../Modals/MemoModal.vue';
 
 const route = useRoute();
@@ -69,6 +71,16 @@ const router = useRouter();
 const memo = ref(null);
 const projects = ref([]);
 const showEditModal = ref(false);
+
+// markedの設定
+marked.setOptions({
+  highlight: function(code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(code, { language: lang }).value;
+    }
+    return hljs.highlightAuto(code).value;
+  }
+});
 
 // マークダウンをHTMLに変換
 const renderedContent = computed(() => {
@@ -164,17 +176,61 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-/* マークダウンのスタイルを追加 */
-.prose {
-  color: #374151;
+<style>
+/* Tailwind CSSのデフォルトスタイルを強制的に上書き */
+.items-center a {
+  color: #0366d6 !important;
+  text-decoration: none !important;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-  color: #111827;
-  font-weight: 600;
+.items-center a:hover {
+  color: #0056b3 !important;
+  text-decoration: underline !important;
+}
+
+/* URLのスタイルを特別に設定 */
+.items-center a[href^="http"] {
+  color: #0366d6 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid #0366d6 !important;
+  padding-bottom: 1px !important;
+}
+
+.items-center a[href^="http"]:hover {
+  color: #0056b3 !important;
+  border-bottom-color: #0056b3 !important;
+  text-decoration: none !important;
+}
+</style>
+
+<style scoped>
+/* Qiita風のマークダウンスタイル */
+.prose {
+  color: #333;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.prose h1 {
+  font-size: 2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.3em;
   margin-top: 1.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+.prose h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
 }
 
 .prose p {
@@ -194,32 +250,100 @@ onMounted(() => {
 }
 
 .prose code {
-  background-color: #f3f4f6;
+  background-color: #f7f7f7;
   padding: 0.2em 0.4em;
-  border-radius: 0.25em;
-  font-family: monospace;
+  border-radius: 3px;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  color: #e83e8c;
 }
 
 .prose pre {
-  background-color: #1f2937;
-  color: #f3f4f6;
-  padding: 1em;
-  border-radius: 0.5em;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  padding: 16px;
   overflow-x: auto;
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #333;
+  font-size: 0.9em;
+}
+
+/* Tailwind CSSのデフォルトスタイルをコメントアウト */
+/* .prose a {
+    color: inherit;
+    text-decoration: inherit;
+} */
+
+/* 既存のスタイルは維持 */
 .prose a {
-  color: #3b82f6;
-  text-decoration: underline;
+  color: #0366d6 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.prose a:hover {
+  color: #0056b3 !important;
+  text-decoration: underline !important;
+}
+
+.prose a[href^="http"] {
+  color: #0366d6 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid #0366d6 !important;
+  padding-bottom: 1px !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.prose a[href^="http"]:hover {
+  color: #0056b3 !important;
+  border-bottom-color: #0056b3 !important;
+  text-decoration: none !important;
 }
 
 .prose blockquote {
-  border-left: 4px solid #e5e7eb;
-  padding-left: 1em;
+  border-left: 4px solid #dfe2e5;
+  padding: 0 1em;
+  color: #6a737d;
   margin-left: 0;
   margin-right: 0;
-  color: #6b7280;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose th, .prose td {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}
+
+.prose th {
+  background-color: #f6f8fa;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
 }
 </style>
