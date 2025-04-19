@@ -1,39 +1,31 @@
 <template>
-    <div class="min-h-screen bg-gray-100 text-gray-900">
+  <div class="min-h-screen bg-gray-100 text-gray-900">
 
-      <!-- メインコンテンツ -->
-      <div class="container mx-auto p-6">
-        <h2 class="text-[1.9rem] font-semibold text-center my-6">本日の利用予定者</h2>
-  
-        <!-- 利用者ボタングリッド -->
-        <div class="grid grid-cols-2 gap-4">
-          <div
-            v-for="user in ShareStore.userSchedule"
-            :key="user.user_id"
-            class="bg-white border-2 border-gray-300 rounded-lg p-8 text-center text-lg font-medium shadow hover:bg-gray-200 transition cursor-pointer"
-            @click="handleClick(user)"
-          >
-            <div class="text-[2.5rem] text-left">{{ user.name }}</div>
-            <!-- <div class="mt-4 text-[1.5rem] text-gray-600">
-              <span v-for="(schedule, index) in user.schedules" :key="schedule.id" class="mr-2">
-                {{ schedule.schedule_name }}{{ index < user.schedules.length - 1 ? ',' : '' }}
-              </span>
-            </div> -->
-          </div>
-        </div>
+    <!-- メインコンテンツ -->
+    <div class="container mx-auto p-6">
+      <h2 class="text-[1.9rem] font-semibold text-center my-6">メモ一覧</h2>
+
+      <!-- メモ表示エリア -->
+      <div class="mt-8">
+        <MemoView />
       </div>
     </div>
+  </div>
   </template>
   
 <script>
-  import { ref, reactive, onMounted, watch, onBeforeUnmount, toRefs, computed } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { useShareStore } from "../stores/useShareData.js";
-  import { getTodayYYYYMMDD } from "../utils/timeUtils.js";
-  import { db } from '../firebase_settings/index.js';
-  import { collection, getDocs, query, where } from "firebase/firestore";
+import { ref, reactive, onMounted, watch, onBeforeUnmount, toRefs, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useShareStore } from "../stores/useShareData.js";
+import { getTodayYYYYMMDD } from "../utils/timeUtils.js";
+import { db } from '../firebase_settings/index.js';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import MemoView from '../components/MemoView.vue';
  
   export default {
+    components: {
+      MemoView
+    },
     setup() {
       const router = useRouter();
       const route = useRoute();
