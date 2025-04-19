@@ -3,11 +3,11 @@
 
     <!-- メインコンテンツ -->
     <div class="container mx-auto p-6">
-      <h2 class="text-[1.9rem] font-semibold text-center my-6">メモ一覧</h2>
+      <h2 class="text-[1.9rem] font-semibold text-center my-6">メモ管理</h2>
 
-      <!-- メモ表示エリア -->
+      <!-- メモ管理エリア -->
       <div class="mt-8">
-        <MemoView />
+        <MemoManager />
       </div>
     </div>
   </div>
@@ -20,11 +20,11 @@ import { useShareStore } from "../stores/useShareData.js";
 import { getTodayYYYYMMDD } from "../utils/timeUtils.js";
 import { db } from '../firebase_settings/index.js';
 import { collection, getDocs, query, where } from "firebase/firestore";
-import MemoView from '../views/MemoView.vue';
+import MemoManager from '../pages/MemoManager.vue';
  
   export default {
     components: {
-      MemoView
+      MemoManager
     },
     setup() {
       const router = useRouter();
@@ -37,7 +37,7 @@ import MemoView from '../views/MemoView.vue';
           ShareStore.$patch({ isLoading: true });
           const today_moji = getTodayYYYYMMDD();
           console.log("今日の日付:", today_moji);
-          ShareStore.setHeaderTitle('利用者選択');
+          ShareStore.setHeaderTitle('メモ管理');
           
           // 現在のユーザー情報を保存
           const currentUser = ShareStore.selected_user;

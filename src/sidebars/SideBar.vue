@@ -19,10 +19,11 @@ export default {
 
 <style scoped>
 .sidebar {
-  width: 250px;
+  width: 100%;
   background-color: #f5f5f5;
   height: 100vh;
   padding: 20px 0;
+  overflow-y: auto;
 }
 
 .menu {

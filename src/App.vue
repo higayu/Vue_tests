@@ -13,12 +13,43 @@
         <!-- コンテンツ部分：サイドバーとメインを横並びに配置 -->
         <div class="content flex p-2">
           <template v-if="hasSidebar">
+            <!-- ハンバーガーメニューボタン -->
+            <button
+              @click="toggleSidebar"
+              class="fixed top-20 left-4 z-50 p-2 bg-white rounded-lg shadow-md hover:bg-gray-100"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
             <!-- サイドバー -->
-            <aside class="w-1/5 max-w-[200px]">
+            <aside
+              :class="[
+                'fixed top-20 left-0 h-[calc(100vh-5rem)] transition-all duration-300 ease-in-out',
+                isSidebarOpen ? 'w-1/5 max-w-[200px] translate-x-0' : '-translate-x-full'
+              ]"
+            >
               <router-view name="sidebar"></router-view>
             </aside>
             <!-- メインコンテンツ -->
-            <main class="w-3/4">
+            <main
+              :class="[
+                'transition-all duration-300 ease-in-out',
+                isSidebarOpen ? 'w-3/4 ml-[200px]' : 'w-full'
+              ]"
+            >
               <router-view name="main"></router-view>
             </main>
           </template>
@@ -52,9 +83,15 @@ export default {
     const route = useRoute();
     const ShareStore = useShareStore();
     const { isLoading, userList, staffList } = toRefs(ShareStore);
+    const isSidebarOpen = ref(true);
 
     // getCurrentInstanceの設定
     const { proxy } = getCurrentInstance();
+
+    // サイドバーの表示/非表示を切り替える関数
+    const toggleSidebar = () => {
+      isSidebarOpen.value = !isSidebarOpen.value;
+    };
 
     // トースト通知用の関数
     const showSuccessToast = (moji) => {
@@ -126,6 +163,8 @@ export default {
       staffList,
       ShareStore,
       hasSidebar,
+      isSidebarOpen,
+      toggleSidebar
     };
   },
 };

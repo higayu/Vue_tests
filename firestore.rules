@@ -30,6 +30,12 @@ service cloud.firestore {
       allow read: if true; // 認証不要で読み取りを許可
       allow write: if true; // 認証不要で書き込みを許可
     }
+
+    // memosコレクションへのアクセス権限を追加
+    match /memos/{memoId} {
+      allow read: if true; // 認証不要で読み取りを許可
+      allow write: if true; // 認証不要で書き込みを許可
+    }
   }
 }
 

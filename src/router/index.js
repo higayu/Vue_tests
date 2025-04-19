@@ -6,6 +6,7 @@ import NavBar3 from "../layout/NavBar3.vue";
 import DashBoard from "../pages/DashBoard.vue";
 import SideBar from "../sidebars/SideBar.vue";
 import ProjectManager from "../pages/ProjectManager.vue";
+import MemoView from "../views/MemoView.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Firebase from "../firebase_settings/index.js";
 
@@ -32,6 +33,17 @@ const routes = [
       sidebar: SideBar,
     },
     meta: { requiresAuth: true } // 認証が必要なページ
+  },
+  {
+    path: '/memo/:id',
+    name: "MemoView",
+    components: {
+      header: HeaderBar,
+      navbar: NavBar3,
+      main: MemoView,
+      sidebar: SideBar,
+    },
+    meta: { requiresAuth: true }
   },
 ];
 
