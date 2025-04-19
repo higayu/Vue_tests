@@ -14,7 +14,7 @@
         <div class="content flex p-2">
           <template v-if="hasSidebar">
             <!-- サイドバー -->
-            <aside class="w-1/4 max-w-[280px]">
+            <aside class="w-1/5 max-w-[200px]">
               <router-view name="sidebar"></router-view>
             </aside>
             <!-- メインコンテンツ -->

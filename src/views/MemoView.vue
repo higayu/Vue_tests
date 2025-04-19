@@ -37,7 +37,7 @@
 import { ref, onMounted } from 'vue';
 import { db } from '../firebase_settings/index.js';
 import { collection, getDocs, addDoc, query, orderBy } from 'firebase/firestore';
-import MemoItem from './MemoItem.vue';
+import MemoItem from '../items/MemoItem.vue';
 
 const memos = ref([]);
 const newMemoContent = ref('');

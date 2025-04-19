@@ -24,6 +24,12 @@ service cloud.firestore {
             request.resource.data.timestamp is timestamp
         );
     }
+
+    // projectsコレクションへのアクセス権限を追加
+    match /projects/{projectId} {
+      allow read: if true; // 認証不要で読み取りを許可
+      allow write: if true; // 認証不要で書き込みを許可
+    }
   }
 }
 

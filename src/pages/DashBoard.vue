@@ -20,7 +20,7 @@ import { useShareStore } from "../stores/useShareData.js";
 import { getTodayYYYYMMDD } from "../utils/timeUtils.js";
 import { db } from '../firebase_settings/index.js';
 import { collection, getDocs, query, where } from "firebase/firestore";
-import MemoView from '../components/MemoView.vue';
+import MemoView from '../views/MemoView.vue';
  
   export default {
     components: {
