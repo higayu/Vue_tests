@@ -41,7 +41,7 @@
     </div>
 
     <!-- メモ内容 -->
-    <div class="prose prose-lg max-w-none bg-gray-50 p-6 rounded-lg">
+    <div class="prose prose-lg border-2 border-gray-300  max-w-none p-6 rounded-lg">
       <div v-html="renderedContent"></div>
     </div>
 
@@ -79,7 +79,15 @@ marked.setOptions({
       return hljs.highlight(code, { language: lang }).value;
     }
     return hljs.highlightAuto(code).value;
-  }
+  },
+  breaks: true,
+  gfm: true,
+  headerIds: false,
+  mangle: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: true,
+  xhtml: false
 });
 
 // マークダウンをHTMLに変換
@@ -177,6 +185,117 @@ onMounted(() => {
 </script>
 
 <style>
+/* グローバルスタイル */
+.prose {
+  color: #24292e;
+  line-height: 1.8;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 1.8;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+/* 赤い太字用のスタイル */
+.prose .text-red-bold {
+  color: #ff0000 !important;
+  font-weight: 600 !important;
+}
+
+.prose .text-red {
+  color: #ff0000 !important;
+}
+
+.prose .text-blue {
+  color: #0000ff !important;
+}
+
+.prose .text-green {
+  color: #008000 !important;
+}
+
+.prose .text-yellow {
+  color: #ffd700 !important;
+}
+
+.prose .text-purple {
+  color: #800080 !important;
+}
+
+.prose .text-orange {
+  color: #ffa500 !important;
+}
+
+.prose .text-gray {
+  color: #808080 !important;
+}
+
+.prose .text-black {
+  color: #000000 !important;
+}
+
+.prose .text-white {
+  color: #ffffff !important;
+}
+
+.prose .bg-red {
+  background-color: #ff0000 !important;
+  color: #ffffff !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-blue {
+  background-color: #0000ff !important;
+  color: #ffffff !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-green {
+  background-color: #008000 !important;
+  color: #ffffff !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-yellow {
+  background-color: #ffd700 !important;
+  color: #000000 !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-purple {
+  background-color: #800080 !important;
+  color: #ffffff !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-orange {
+  background-color: #ffa500 !important;
+  color: #000000 !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+
+.prose .bg-gray {
+  background-color: #808080 !important;
+  color: #ffffff !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+}
+</style>
+
+<style scoped>
 /* Tailwind CSSのデフォルトスタイルを強制的に上書き */
 .items-center a {
   color: #0366d6 !important;
@@ -201,119 +320,93 @@ onMounted(() => {
   border-bottom-color: #0056b3 !important;
   text-decoration: none !important;
 }
-</style>
 
-<style scoped>
 /* Qiita風のマークダウンスタイル */
-.prose {
-  color: #333;
-  line-height: 1.8;
-  font-size: 16px;
-}
-
 .prose h1 {
   font-size: 2em;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eaecef;
   padding-bottom: 0.3em;
   margin-top: 1.5em;
   margin-bottom: 1em;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .prose h2 {
   font-size: 1.5em;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eaecef;
   padding-bottom: 0.3em;
   margin-top: 1.5em;
   margin-bottom: 1em;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .prose h3 {
   font-size: 1.25em;
   margin-top: 1.5em;
   margin-bottom: 1em;
-}
-
-.prose p {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .prose ul, .prose ol {
   margin-top: 1em;
   margin-bottom: 1em;
-  padding-left: 1.5em;
+  padding-left: 2em;
 }
 
 .prose li {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  line-height: 1.8;
 }
 
 .prose code {
-  background-color: #f7f7f7;
+  background-color: rgba(27, 31, 35, 0.05);
   padding: 0.2em 0.4em;
   border-radius: 3px;
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.9em;
-  color: #e83e8c;
+  color: #24292e;
 }
 
 .prose pre {
-  background-color: #f7f7f7;
-  border-radius: 3px;
+  background-color: #f6f8fa;
+  border-radius: 6px;
   padding: 16px;
   overflow-x: auto;
   margin-top: 1em;
   margin-bottom: 1em;
+  border: 1px solid #e1e4e8;
 }
 
 .prose pre code {
   background-color: transparent;
   padding: 0;
-  color: #333;
+  color: #24292e;
   font-size: 0.9em;
+  line-height: 1.45;
 }
 
-/* Tailwind CSSのデフォルトスタイルをコメントアウト */
-/* .prose a {
-    color: inherit;
-    text-decoration: inherit;
-} */
-
-/* 既存のスタイルは維持 */
 .prose a {
-  color: #0366d6 !important;
-  text-decoration: none !important;
+  color: #0366d6;
+  text-decoration: none;
   transition: color 0.2s ease;
   cursor: pointer;
 }
 
 .prose a:hover {
-  color: #0056b3 !important;
-  text-decoration: underline !important;
-}
-
-.prose a[href^="http"] {
-  color: #0366d6 !important;
-  text-decoration: none !important;
-  border-bottom: 1px solid #0366d6 !important;
-  padding-bottom: 1px !important;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.prose a[href^="http"]:hover {
-  color: #0056b3 !important;
-  border-bottom-color: #0056b3 !important;
-  text-decoration: none !important;
+  color: #0056b3;
+  text-decoration: underline;
 }
 
 .prose blockquote {
   border-left: 4px solid #dfe2e5;
   padding: 0 1em;
   color: #6a737d;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 1em 0;
+  font-style: italic;
 }
 
 .prose table {
@@ -321,15 +414,17 @@ onMounted(() => {
   width: 100%;
   margin-top: 1em;
   margin-bottom: 1em;
+  border: 1px solid #e1e4e8;
 }
 
 .prose th, .prose td {
-  border: 1px solid #dfe2e5;
-  padding: 6px 13px;
+  border: 1px solid #e1e4e8;
+  padding: 8px 13px;
 }
 
 .prose th {
   background-color: #f6f8fa;
+  font-weight: 600;
 }
 
 .prose img {
@@ -337,6 +432,7 @@ onMounted(() => {
   height: auto;
   margin-top: 1em;
   margin-bottom: 1em;
+  border-radius: 6px;
 }
 
 .prose hr {
@@ -345,5 +441,157 @@ onMounted(() => {
   margin: 24px 0;
   background-color: #e1e4e8;
   border: 0;
+}
+
+/* コードブロックのシンタックスハイライト */
+.prose .hljs {
+  background: #f6f8fa;
+  border-radius: 6px;
+}
+
+.prose .hljs-keyword {
+  color: #d73a49;
+}
+
+.prose .hljs-string {
+  color: #032f62;
+}
+
+.prose .hljs-comment {
+  color: #6a737d;
+  font-style: italic;
+}
+
+.prose .hljs-function {
+  color: #6f42c1;
+}
+
+.prose .hljs-number {
+  color: #005cc5;
+}
+
+.prose .hljs-attr {
+  color: #005cc5;
+}
+
+.prose .hljs-selector-tag {
+  color: #d73a49;
+}
+
+.prose .hljs-title {
+  color: #6f42c1;
+}
+
+.prose .hljs-params {
+  color: #24292e;
+}
+
+.prose .hljs-built_in {
+  color: #6f42c1;
+}
+
+.prose .hljs-literal {
+  color: #005cc5;
+}
+
+.prose .hljs-type {
+  color: #005cc5;
+}
+
+.prose .hljs-addition {
+  background-color: #e6ffed;
+  color: #22863a;
+}
+
+.prose .hljs-deletion {
+  background-color: #ffeef0;
+  color: #cb2431;
+}
+
+/* マークダウン内で使用できる色のスタイル */
+.prose .text-red {
+  color: #ff0000;
+}
+
+.prose .text-blue {
+  color: #0000ff;
+}
+
+.prose .text-green {
+  color: #008000;
+}
+
+.prose .text-yellow {
+  color: #ffd700;
+}
+
+.prose .text-purple {
+  color: #800080;
+}
+
+.prose .text-orange {
+  color: #ffa500;
+}
+
+.prose .text-gray {
+  color: #808080;
+}
+
+.prose .text-black {
+  color: #000000;
+}
+
+.prose .text-white {
+  color: #ffffff;
+}
+
+/* 背景色のスタイル */
+.prose .bg-red {
+  background-color: #ff0000;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-blue {
+  background-color: #0000ff;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-green {
+  background-color: #008000;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-yellow {
+  background-color: #ffd700;
+  color: #000000;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-purple {
+  background-color: #800080;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-orange {
+  background-color: #ffa500;
+  color: #000000;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose .bg-gray {
+  background-color: #808080;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
 </style>
